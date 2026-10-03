@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "carpriceradar",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-03-25",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  }
+  // Secrets (set with `npx wrangler secret put NAME`, not here):
+  //   NEXT_PUBLIC_DC_MARKER  SUPABASE_URL  SUPABASE_ANON_KEY
+  //   SUPABASE_SERVICE_ROLE_KEY  CRON_SECRET
+  //
+  // Daily price snapshot: add once fetchLivePrices() is implemented ->
+  //   "triggers": { "crons": ["0 10 * * *"] }
+  // plus a scheduled() handler (see README "Cron" section).
+}

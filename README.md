@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CarPriceRadar
 
-## Getting Started
+Airport car-rental price tracker. Next.js 16 (App Router) + Supabase, deployed on
+**Cloudflare Workers** via the OpenNext adapter. pSEO: one page per airport with
+live price, price history, and pickup logistics.
 
-First, run the development server:
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev            # localhost:3000 (Cloudflare runtime via OpenNext dev)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Runs fine without any env vars — prices/history just stay empty.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Env (`.env.local`, see `.env.local.example`)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Var | What |
+|-----|------|
+| `NEXT_PUBLIC_DC_MARKER` | Discover Cars affiliate marker (`a_aid`). Self-serve signup, no company needed. |
+| `SUPABASE_URL` / `SUPABASE_ANON_KEY` | Read price history. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Write daily snapshots (cron only). |
+| `CRON_SECRET` | Protects `/api/snapshot`. |
 
-## Learn More
+Create the table once: run `supabase/schema.sql` in the Supabase SQL editor.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy (Cloudflare)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Domain `carpriceradar.com` is already on Cloudflare — point it at the Worker.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run preview        # build + run the Worker locally
+npm run deploy         # build + deploy to Cloudflare Workers
+```
 
-## Deploy on Vercel
+Set production secrets (not in wrangler.jsonc):
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx wrangler secret put NEXT_PUBLIC_DC_MARKER
+npx wrangler secret put SUPABASE_URL
+npx wrangler secret put SUPABASE_ANON_KEY
+npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+npx wrangler secret put CRON_SECRET
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+First deploy creates the Worker; then bind the custom domain in the Cloudflare
+dashboard (Workers > carpriceradar > Settings > Domains) to `carpriceradar.com`.
+
+## Daily price snapshot (cron) — wire when the feed is ready
+
+`fetchLivePrices()` in `app/api/snapshot/route.js` is a stub returning `[]`, so the
+cron would write nothing yet. Once it returns real rates:
+
+1. Add to `wrangler.jsonc`: `"triggers": { "crons": ["0 10 * * *"] }`
+2. Add a `scheduled()` handler. Simplest: a thin wrapper worker that re-exports
+   OpenNext's `fetch` and calls `/api/snapshot` with the `CRON_SECRET` bearer on
+   schedule. (Cloudflare cron triggers invoke `scheduled()`, not an HTTP path.)
+
+Until then, leave the trigger out so deploys don't register a no-op cron.
+
+## Structure
+
+- `lib/airports.js` — airport seed + data-gate (`status: "ready"`) + nearby lookup
+- `lib/priceHistory.js` — Supabase read/write + sparkline (no chart lib, no SDK)
+- `lib/discovercars.js` — affiliate deep link
+- `app/car-rental/[airport]/page.js` — the pSEO template
+- `app/api/snapshot/route.js` — daily snapshot writer (feed TODO)
+- `supabase/schema.sql` — the one table
