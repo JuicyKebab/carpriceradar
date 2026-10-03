@@ -5,7 +5,7 @@
   --border: #e3e7ee;
   --ink: #141a24;
   --ink-soft: #5a6472;
-  --ink-faint: #8d97a5;
+  --ink-faint: #676f7e;
   --brand: #0b5cff;
   --brand-ink: #063aa8;
   --accent: #ff6b3d;
@@ -46,7 +46,7 @@ p { margin: 0 0 1rem; }
   backdrop-filter: saturate(140%) blur(10px);
   border-bottom: 1px solid var(--border);
 }
-.site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 62px; flex-wrap: wrap; gap: 8px 0; padding: 8px 20px; }
 .logo { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.12rem; color: var(--ink); letter-spacing: -0.02em; }
 .logo:hover { text-decoration: none; }
 .logo .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent); }
@@ -67,7 +67,7 @@ p { margin: 0 0 1rem; }
   box-shadow: 0 6px 18px color-mix(in srgb, var(--brand) 32%, transparent);
 }
 .btn:hover { text-decoration: none; transform: translateY(-1px); }
-.btn.accent { background: var(--accent); box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 34%, transparent); }
+.btn.accent { background: var(--accent); color: var(--ink); box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 34%, transparent); }
 .btn.ghost { background: transparent; color: var(--brand); box-shadow: none; border: 1.5px solid var(--border); }
 
 /* cards + grid */
@@ -96,7 +96,7 @@ section { padding: 34px 0; }
 .section-head { margin-bottom: 20px; }
 
 /* price box (airport page) */
-.pricebox { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: center; }
+.pricebox { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: start; }
 @media (max-width: 760px) { .pricebox { grid-template-columns: 1fr; } }
 .pricebox .big { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.03em; }
 .pricebox .big small { font-size: 1rem; font-weight: 600; color: var(--ink-soft); }
@@ -131,3 +131,19 @@ details.faq[open] summary { margin-bottom: 8px; }
 .site-footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 28px; justify-content: space-between; }
 .site-footer a { color: var(--ink-soft); }
 .disclaimer { font-size: 0.8rem; color: var(--ink-faint); max-width: 60ch; }
+
+/* skip link */
+.skip-link { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--surface); color: var(--ink); padding: 10px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.skip-link:focus { left: 12px; top: 12px; }
+
+/* hero CTA row (promoted from inline styles) */
+.hero-ctas { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+
+@media (max-width: 420px) {
+  .nav { gap: 14px; font-size: 0.88rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .airport-card { transition: none; }
+}

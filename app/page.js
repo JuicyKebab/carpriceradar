@@ -12,13 +12,13 @@ export default function Home() {
       <section className="hero">
         <div className="wrap">
           <p className="eyebrow">Airport car rental, with the price history</p>
-          <h1>Know what a rental car should cost before you book</h1>
+          <h1>See the price trend before you rent a car at the airport</h1>
           <p className="lead">
-            Rental prices at the airport swing week to week. We track them so you
-            can see today's rate next to the last few weeks and tell whether it is
-            a good time to lock it in.
+            We track the daily rate at your airport so you can see today's price
+            next to the past few weeks, not just a single number with a countdown
+            timer telling you to hurry.
           </p>
-          <div style={{ display: "flex", gap: 12, marginTop: 20, flexWrap: "wrap" }}>
+          <div className="hero-ctas">
             <a href="/car-rental" className="btn">Find your airport</a>
             <a href="/how-it-works" className="btn ghost">How the tracking works</a>
           </div>

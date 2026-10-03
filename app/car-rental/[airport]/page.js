@@ -40,6 +40,10 @@ function buildFaq(a) {
       q: `Which car type should I rent at ${a.iata}?`,
       a: `For city trips a compact or economy car is usually enough and cheapest. If you are heading to ${a.popularRoutes[0]} or ${a.popularRoutes[1]}, size up for the luggage and distance. Compare the rate per car type above before deciding.`,
     },
+    {
+      q: `Does it cost more to book through ${SITE.name} than going direct?`,
+      a: `No. You pay the same price the rental company lists either way. If you book through one of our partner links they pay us a commission, not you, and that is what funds the price tracking.`,
+    },
   ];
 }
 
@@ -106,16 +110,18 @@ export default async function AirportPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <div className="wrap">
-        <p className="crumb">
-          <a href="/">Home</a> › <a href="/car-rental">Airports</a> › {a.city} ({a.iata})
-        </p>
+        <nav aria-label="Breadcrumb" className="crumb">
+          <a href="/">Home</a> › <a href="/car-rental">Airports</a> › <span aria-current="page">{a.city} ({a.iata})</span>
+        </nav>
       </div>
 
       <section className="hero" style={{ paddingTop: 8, paddingBottom: 24 }}>
         <div className="wrap">
           <h1>{a.city} Airport ({a.iata}) car rental prices</h1>
           <p className="lead">
-            Compare suppliers at {a.name} and see how the price has moved before you book.
+            {latest
+              ? `Prices at ${a.name} move week to week. See the trend, then compare suppliers before you book.`
+              : `Compare live rental prices at ${a.name}. We're building the price history here, so check back to watch the trend.`}
           </p>
         </div>
       </section>
@@ -136,7 +142,7 @@ export default async function AirportPage({ params }) {
                     {trend && (
                       <p className="muted" style={{ marginTop: 6 }}>
                         {trend === "down"
-                          ? "Prices have eased over the tracked period — a reasonable time to book."
+                          ? "Prices have eased over the tracked period. This is a reasonable time to book."
                           : trend === "up"
                             ? "Prices have climbed recently. If your dates are flexible, it may pay to wait."
                             : "Prices have held steady over the tracked period."}
@@ -154,10 +160,14 @@ export default async function AirportPage({ params }) {
                   </>
                 )}
                 <a href={bookUrl} className="btn accent" rel="sponsored nofollow" target="_blank" style={{ marginTop: 14 }}>
-                  Compare live prices at {a.iata}
+                  {trend === "down" ? `Lock in this rate at ${a.iata}` : `Compare live prices at ${a.iata}`}
                 </a>
+                <p className="faint" style={{ marginTop: 8 }}>
+                  Free for you. Same price as booking direct. We only earn a commission if you book.
+                </p>
               </div>
               <div>
+                <p className="muted" style={{ fontSize: "0.82rem", fontWeight: 700, marginBottom: 6 }}>Price trend</p>
                 {spark ? (
                   <>
                     <svg className="spark" viewBox="0 0 280 48" preserveAspectRatio="none" role="img" aria-label={`Price trend for ${a.iata}`}>
