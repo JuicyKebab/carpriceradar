@@ -1,69 +1,77 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { READY_AIRPORTS } from "@/lib/airports";
+import { SITE } from "@/lib/site";
+
+export const metadata = {
+  description: SITE.description,
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.js</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main>
+      <section className="hero">
+        <div className="wrap">
+          <p className="eyebrow">Airport car rental, with the price history</p>
+          <h1>Know what a rental car should cost before you book</h1>
+          <p className="lead">
+            Rental prices at the airport swing week to week. We track them so you
+            can see today's rate next to the last few weeks and tell whether it is
+            a good time to lock it in.
           </p>
+          <div style={{ display: "flex", gap: 12, marginTop: 20, flexWrap: "wrap" }}>
+            <a href="/car-rental" className="btn">Find your airport</a>
+            <a href="/how-it-works" className="btn ghost">How the tracking works</a>
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <div className="section-head">
+            <h2>Pick your airport</h2>
+            <p className="muted">
+              Live prices, pickup logistics and how the rate has moved, for each airport below.
+            </p>
+          </div>
+          <div className="grid cols-4">
+            {READY_AIRPORTS.map((a) => (
+              <a key={a.slug} href={`/car-rental/${a.slug}`} className="card airport-card">
+                <span className="iata">{a.iata}</span>
+                <span className="city">{a.city}</span>
+                <span className="country">{a.country}</span>
+              </a>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <div className="grid cols-3">
+            <div className="card">
+              <h3>Live prices</h3>
+              <p className="muted">
+                We pull current rates per airport and show them by car type, so you
+                compare like for like instead of one headline number.
+              </p>
+            </div>
+            <div className="card">
+              <h3>The price history</h3>
+              <p className="muted">
+                Every day we record the going rate. You see the trend, not just a
+                snapshot, so a "deal" that is actually a high week gets caught.
+              </p>
+            </div>
+            <div className="card">
+              <h3>The airport detail</h3>
+              <p className="muted">
+                Where the rental center is, how long the shuttle takes, which tolls
+                bite. The stuff that costs you time and money on arrival.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
