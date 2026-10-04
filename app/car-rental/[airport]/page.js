@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
-import { READY_AIRPORTS, getAirport, nearbyAirports } from "@/lib/airports";
+import { BUILT_AIRPORTS, getAirport, nearbyAirports, currencySymbol } from "@/lib/airports";
 import { getPriceHistory, sparklinePath } from "@/lib/priceHistory";
 import { discoverCarsLink } from "@/lib/discovercars";
 import { SITE } from "@/lib/site";
 
 export function generateStaticParams() {
-  return READY_AIRPORTS.map((a) => ({ airport: a.slug }));
+  return BUILT_AIRPORTS.map((a) => ({ airport: a.slug }));
 }
 
 export async function generateMetadata({ params }) {
@@ -18,6 +18,8 @@ export async function generateMetadata({ params }) {
     description: `Current car-rental prices at ${a.name} (${a.iata}), how the rate has moved recently, and how pickup works. Compare suppliers before you book in ${a.city}.`,
     alternates: { canonical: `/car-rental/${a.slug}` },
     openGraph: { title: `${title} | ${SITE.name}`, type: "article" },
+    // Queued airports are built but held back from the index until promoted.
+    ...(a.status === "ready" ? {} : { robots: { index: false, follow: true } }),
   };
 }
 
@@ -136,7 +138,7 @@ export default async function AirportPage({ params }) {
                   <>
                     <div className="faint">Recent average, all car types</div>
                     <div className="big">
-                      {a.currency === "USD" ? "$" : a.currency === "GBP" ? "£" : a.currency === "EUR" ? "€" : ""}
+                      {currencySymbol(a.currency)}
                       {latest.avg} <small>/ day</small>
                     </div>
                     {trend && (

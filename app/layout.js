@@ -49,6 +49,12 @@ function Footer() {
             <a href="/car-rental">All airports</a>
             <br />
             <a href="/how-it-works">How it works</a>
+            <br />
+            <a href="/about">About</a>
+            <br />
+            <a href="/disclosure">Affiliate disclosure</a>
+            <br />
+            <a href="/privacy">Privacy</a>
           </p>
           <p className="faint">© {"2026"} {SITE.name}</p>
         </div>

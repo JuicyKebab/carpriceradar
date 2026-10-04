@@ -7,6 +7,9 @@ export default function sitemap() {
     { url: SITE.domain, priority: 1, changeFrequency: "daily" },
     { url: `${SITE.domain}/car-rental`, priority: 0.9, changeFrequency: "daily" },
     { url: `${SITE.domain}/how-it-works`, priority: 0.4, changeFrequency: "monthly" },
+    { url: `${SITE.domain}/about`, priority: 0.3, changeFrequency: "monthly" },
+    { url: `${SITE.domain}/disclosure`, priority: 0.3, changeFrequency: "monthly" },
+    { url: `${SITE.domain}/privacy`, priority: 0.2, changeFrequency: "yearly" },
   ];
   const airportPages = READY_AIRPORTS.map((a) => ({
     url: `${SITE.domain}/car-rental/${a.slug}`,
