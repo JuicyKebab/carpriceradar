@@ -1,0 +1,12 @@
+# CarPriceRadar
+
+> Airport car-rental comparison guide. For each airport we help you compare live rates across suppliers and car types for your exact dates, and we document the pickup logistics (rental-center location, shuttle time, tolls, return) that catch travellers out. Comparison and booking go to partner sites; we earn a commission at no extra cost to you.
+
+## Core
+- [All airports](https://carpriceradar.com/car-rental): index of covered airports, grouped by country.
+- [How it works](https://carpriceradar.com/how-it-works): how we compare prices and document pickup.
+- [About](https://carpriceradar.com/about): who runs the site.
+
+## Trust
+- [Affiliate disclosure](https://carpriceradar.com/disclosure)
+- [Privacy policy](https://carpriceradar.com/privacy)
