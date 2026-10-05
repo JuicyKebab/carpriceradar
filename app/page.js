@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { READY_AIRPORTS } from "@/lib/airports";
 import { SITE } from "@/lib/site";
 
@@ -11,17 +12,21 @@ export default function Home() {
     <main>
       <section className="hero">
         <div className="wrap">
-          <p className="eyebrow">Airport car rental, with the price history</p>
-          <h1>See the price trend before you rent a car at the airport</h1>
+          <p className="eyebrow">Independent airport car-rental price checker</p>
+          <h1>Compare airport car rental prices, and know exactly where to go when you land</h1>
           <p className="lead">
-            We track the daily rate at your airport so you can see today's price
-            next to the past few weeks, not just a single number with a countdown
-            timer telling you to hurry.
+            We don&apos;t sell the rental. We compare suppliers for your dates and
+            show you what the booking page won&apos;t, where the rental center is,
+            how long the shuttle takes, which tolls bite, then send you to
+            DiscoverCars to lock the rate.
           </p>
           <div className="hero-ctas">
-            <a href="/car-rental" className="btn">Find your airport</a>
-            <a href="/how-it-works" className="btn ghost">How the tracking works</a>
+            <Link href="/car-rental" className="btn">See prices + pickup info for your airport</Link>
+            <Link href="/how-it-works" className="btn ghost">How it works</Link>
           </div>
+          <p className="muted" style={{ marginTop: 14, fontSize: "0.9rem" }}>
+            Covering {READY_AIRPORTS.length} airports across the US, Europe and beyond.
+          </p>
         </div>
       </section>
 
@@ -30,16 +35,16 @@ export default function Home() {
           <div className="section-head">
             <h2>Pick your airport</h2>
             <p className="muted">
-              Live prices, pickup logistics and how the rate has moved, for each airport below.
+              Live prices and the pickup logistics that catch travellers out, for each airport below.
             </p>
           </div>
           <div className="grid cols-4">
             {READY_AIRPORTS.map((a) => (
-              <a key={a.slug} href={`/car-rental/${a.slug}`} className="card airport-card">
+              <Link key={a.slug} href={`/car-rental/${a.slug}`} className="card airport-card">
                 <span className="iata">{a.iata}</span>
                 <span className="city">{a.city}</span>
                 <span className="country">{a.country}</span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -49,17 +54,18 @@ export default function Home() {
         <div className="wrap">
           <div className="grid cols-3">
             <div className="card">
-              <h3>Live prices</h3>
+              <h3>Compare like for like</h3>
               <p className="muted">
-                We pull current rates per airport and show them by car type, so you
-                compare like for like instead of one headline number.
+                Current rates per airport across suppliers and car types, for your
+                exact dates, so you weigh the same thing instead of one headline
+                number.
               </p>
             </div>
             <div className="card">
-              <h3>The price history</h3>
+              <h3>No countdown tricks</h3>
               <p className="muted">
-                Every day we record the going rate. You see the trend, not just a
-                snapshot, so a "deal" that is actually a high week gets caught.
+                No fake &quot;1 seat left&quot; timers or inflated strike-through prices. Just
+                the live rate and a straight link to book it.
               </p>
             </div>
             <div className="card">
