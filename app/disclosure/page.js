@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SITE } from "@/lib/site";
 
 export const metadata = {
@@ -59,7 +60,7 @@ export default function Disclosure() {
 
           <p className="muted">
             Questions? See our{" "}
-            <a href="/about">about page</a> for how to reach us.
+            <Link href="/about">about page</Link> for how to reach us.
           </p>
         </div>
       </section>

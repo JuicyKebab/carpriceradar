@@ -147,3 +147,26 @@ details.faq[open] summary { margin-bottom: 8px; }
   html { scroll-behavior: auto; }
   .btn, .airport-card { transition: none; }
 }
+
+/* Cookie preferences revisit button for vanilla-cookieconsent. */
+.cpr-cc-revisit {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 40;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+  background: var(--brand);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  opacity: 0.85;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+.cpr-cc-revisit:hover { opacity: 1; }
+/* Hide revisit button while the banner is still shown. */
+body:has(#cc-main .cm--show) .cpr-cc-revisit { display: none; }
+#cc-main { --cc-z-index: 2147483647; }

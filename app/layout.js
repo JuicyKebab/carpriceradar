@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { Geist } from "next/font/google";
 import "./globals.css";
+import "vanilla-cookieconsent/dist/cookieconsent.css";
 import { SITE } from "@/lib/site";
+import CookieConsent from "./components/CookieConsent";
 
 const geist = Geist({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
 
@@ -19,13 +22,13 @@ function Header() {
   return (
     <header className="site-header">
       <div className="wrap">
-        <a href="/" className="logo">
+        <Link href="/" className="logo">
           <span className="dot" aria-hidden />
           {SITE.name}
-        </a>
+        </Link>
         <nav className="nav">
-          <a href="/car-rental">Airports</a>
-          <a href="/how-it-works">How it works</a>
+          <Link href="/car-rental">Airports</Link>
+          <Link href="/how-it-works">How it works</Link>
         </nav>
       </div>
     </header>
@@ -39,22 +42,24 @@ function Footer() {
         <div>
           <strong>{SITE.name}</strong>
           <p className="disclaimer">
-            We compare live rental prices and track how they move. Booking links
-            go to our partners, who may pay us a commission. It never changes the
-            price you pay.
+            We compare live rental prices and add the airport pickup detail other
+            sites skip. Booking links go to our partners, who may pay us a
+            commission. It never changes the price you pay.
           </p>
         </div>
         <div>
           <p>
-            <a href="/car-rental">All airports</a>
+            <Link href="/car-rental">All airports</Link>
             <br />
-            <a href="/how-it-works">How it works</a>
+            <Link href="/car-rental-fees">Airport fees compared</Link>
             <br />
-            <a href="/about">About</a>
+            <Link href="/how-it-works">How it works</Link>
             <br />
-            <a href="/disclosure">Affiliate disclosure</a>
+            <Link href="/about">About</Link>
             <br />
-            <a href="/privacy">Privacy</a>
+            <Link href="/disclosure">Affiliate disclosure</Link>
+            <br />
+            <Link href="/privacy">Privacy</Link>
           </p>
           <p className="faint">© {"2026"} {SITE.name}</p>
         </div>
@@ -63,14 +68,32 @@ function Footer() {
   );
 }
 
+const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE.domain}/#org`,
+      name: SITE.name,
+      url: SITE.domain,
+      description: SITE.description,
+      knowsAbout: ["airport car rental", "car hire", "rental car pickup", "car rental prices", "airport transport"],
+      ...(SITE.sameAs.length ? { sameAs: SITE.sameAs } : {}),
+    },
+    { "@type": "WebSite", "@id": `${SITE.domain}/#site`, name: SITE.name, url: SITE.domain, publisher: { "@id": `${SITE.domain}/#org` } },
+  ],
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={geist.variable}>
       <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd).replace(/</g, "\\u003c") }} />
         <a href="#main" className="skip-link">Skip to content</a>
         <Header />
         <div id="main">{children}</div>
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   );

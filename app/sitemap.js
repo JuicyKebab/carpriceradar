@@ -10,6 +10,7 @@ export default function sitemap() {
   const staticPages = [
     { url: SITE.domain, priority: 1 },
     { url: `${SITE.domain}/car-rental`, priority: 0.9 },
+    { url: `${SITE.domain}/car-rental-fees`, priority: 0.6 },
     { url: `${SITE.domain}/how-it-works`, priority: 0.4 },
     { url: `${SITE.domain}/about`, priority: 0.3 },
     { url: `${SITE.domain}/disclosure`, priority: 0.3 },

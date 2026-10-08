@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SITE } from "@/lib/site";
 
 export const metadata = {
@@ -27,7 +28,7 @@ export default function Privacy() {
           <p className="muted">
             You do not sign in to use {SITE.name}, and we do not ask for your
             name, email or payment details. We never see your booking; that
-            happens entirely on the rental partner's own site.
+            happens entirely on the rental partner&apos;s own site.
           </p>
 
           <h2>The prices we store</h2>
@@ -43,7 +44,7 @@ export default function Privacy() {
             such as Discover Cars. That partner may set a cookie so they can
             credit the referral to us if you book. That cookie and anything you
             do on their site are covered by their own privacy policy, not ours.
-            See our <a href="/disclosure">affiliate disclosure</a> for how the
+            See our <Link href="/disclosure">affiliate disclosure</Link> for how the
             referral works.
           </p>
 
@@ -57,7 +58,7 @@ export default function Privacy() {
           <h2>Changes and contact</h2>
           <p className="muted">
             If this policy changes, the updated version appears here. Questions
-            about your privacy? Reach us via our <a href="/about">about page</a>.
+            about your privacy? Reach us via our <Link href="/about">about page</Link>.
           </p>
         </div>
       </section>

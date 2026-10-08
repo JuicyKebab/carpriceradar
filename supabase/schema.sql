@@ -21,3 +21,19 @@ create policy "read prices" on car_price_history
 
 -- No insert/update/delete policy => only service_role (which bypasses RLS)
 -- can write, which is exactly what the /api/snapshot cron uses.
+
+-- Affiliate click log, written by /go/[partner]. No IP, UA or user id stored.
+create table if not exists affiliate_clicks (
+  id         bigint generated always as identity primary key,
+  partner    text not null,               -- dc
+  kind       text not null,               -- airport / country
+  slug       text not null,
+  placement  text not null,               -- top / bottom
+  clicked_at timestamptz not null default now()
+);
+
+create index if not exists affiliate_clicks_lookup
+  on affiliate_clicks (kind, slug, clicked_at desc);
+
+-- RLS on with no policies => only service_role can read or write.
+alter table affiliate_clicks enable row level security;

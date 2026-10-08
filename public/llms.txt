@@ -4,6 +4,7 @@
 
 ## Core
 - [All airports](https://carpriceradar.com/car-rental): index of covered airports, grouped by country.
+- [Airport car rental fees compared](https://carpriceradar.com/car-rental-fees): concession recovery fees, facility charges, peak season and climate across all covered airports (free to cite).
 - [How it works](https://carpriceradar.com/how-it-works): how we compare prices and document pickup.
 - [About](https://carpriceradar.com/about): who runs the site.
 
