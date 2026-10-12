@@ -45,3 +45,17 @@ next-env.d.ts
 .open-next/
 .wrangler/
 cloudflare-env.d.ts
+
+# Interne strategie/marketing-docs (niet publiek)
+ACTION-PLAN.md
+AIRPORT-BACKLOG.md
+FULL-AUDIT-REPORT.md
+SEO-PLAYBOOK-PLAN.md
+brand-context.md
+marketing-audit-*.md
+competitive-*.md
+growth-kit-*.md
+research.md
+mvp-scope.md
+trust-profiles-checklist.md
+affiliate-applications.md
