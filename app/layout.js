@@ -60,6 +60,9 @@ function Footer() {
             <Link href="/disclosure">Affiliate disclosure</Link>
             <br />
             <Link href="/privacy">Privacy</Link>
+            <br />
+            <a href="https://www.instagram.com/carpriceradar/" target="_blank" rel="me noopener">Instagram</a>
+            <a href="https://www.facebook.com/profile.php?id=61595340780773" target="_blank" rel="me noopener">Facebook</a>
           </p>
           <p className="faint">© {"2026"} {SITE.name}</p>
         </div>
