@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
   const title = long.length <= 60 ? long : short.length <= 60 ? short : `${a.city} (${a.iata}) car rental & return`;
   return {
     title,
-    description: `Car rental at ${a.name} (${a.iata}): compare rates across suppliers, find the rental car center, learn how to return your car, and see the fees to expect.`,
+    description: `Car rental at ${a.name} (${a.iata}): compare supplier rates, find the rental car center, and see how pickup, return and fees work.`,
     alternates: { canonical: `/car-rental/${a.slug}` },
     openGraph: { title: `${title} | ${SITE.name}`, type: "article" },
     // Queued airports are built but held back from the index until promoted.
@@ -114,6 +114,14 @@ export default async function AirportPage({ params }) {
           { "@type": "ListItem", position: 2, name: "Airports", item: `${SITE.domain}/car-rental` },
           { "@type": "ListItem", position: 3, name: `${a.city} (${a.iata})`, item: `${SITE.domain}/car-rental/${a.slug}` },
         ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
       },
       // Only claim an offer when we have real price data — never fabricate.
       ...(latest

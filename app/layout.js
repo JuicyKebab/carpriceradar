@@ -59,6 +59,8 @@ function Footer() {
             <br />
             <Link href="/disclosure">Affiliate disclosure</Link>
             <br />
+            <Link href="/alternatives">Alternatives</Link>
+            <br />
             <Link href="/privacy">Privacy</Link>
             <br />
             <Link href="/terms">Terms</Link>

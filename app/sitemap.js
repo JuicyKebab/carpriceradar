@@ -16,6 +16,7 @@ export default function sitemap() {
     { url: `${SITE.domain}/disclosure`, priority: 0.3 },
     { url: `${SITE.domain}/privacy`, priority: 0.2 },
     { url: `${SITE.domain}/terms`, priority: 0.2 },
+    { url: `${SITE.domain}/alternatives`, priority: 0.5 },
   ];
   const airportPages = READY_AIRPORTS.map((a) => ({
     url: `${SITE.domain}/car-rental/${a.slug}`,

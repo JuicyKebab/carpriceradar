@@ -7,7 +7,7 @@ import { AIRPORT_DRIVES } from "@/lib/airportDrives";
 export const metadata = {
   title: "Airport car rental fees, compared across airports",
   description:
-    "The surcharges that inflate on-airport car rental: concession recovery fees, customer facility charges, peak season and climate, compared side by side across the airports we cover. Sourced, dated, free to cite.",
+    "On-airport car rental surcharges compared: concession recovery fees, customer facility charges, peak season and climate, across the airports we cover.",
   alternates: { canonical: "/car-rental-fees" },
 };
 
