@@ -61,6 +61,8 @@ function Footer() {
             <br />
             <Link href="/privacy">Privacy</Link>
             <br />
+            <Link href="/terms">Terms</Link>
+            <br />
             <a href="https://www.instagram.com/carpriceradar/" target="_blank" rel="me noopener">Instagram</a>
             <a href="https://www.facebook.com/profile.php?id=61595340780773" target="_blank" rel="me noopener">Facebook</a>
           </p>
