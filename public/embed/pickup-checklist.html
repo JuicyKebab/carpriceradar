@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Rental car pickup inspection checklist + damage diagram</title>
+<style>
+  :root{
+    --bg:#f7f8fa;--surface:#fff;--surface-2:#f1f3f7;--border:#e3e7ee;
+    --ink:#141a24;--ink-soft:#5a6472;--ink-faint:#676f7e;
+    --brand:#0b5cff;--brand-ink:#063aa8;--accent:#ff6b3d;--good:#0f9d58;
+    --radius:14px;--radius-sm:9px;
+    --font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{background:transparent;color:var(--ink);font-family:var(--font);line-height:1.5;-webkit-font-smoothing:antialiased;font-size:15px;}
+  .widget{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;max-width:620px;margin:0 auto;box-shadow:0 1px 2px rgba(20,26,36,.04),0 8px 24px rgba(20,26,36,.06);}
+  .eyebrow{font-weight:700;color:var(--brand);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin:0 0 6px;}
+  h1{font-size:1.28rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin:0 0 4px;}
+  .sub{color:var(--ink-soft);font-size:.9rem;margin:0 0 18px;}
+  h2{font-size:1rem;font-weight:800;letter-spacing:-.01em;margin:22px 0 10px;}
+  .diagram{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;}
+  .diagram .hint{font-size:.82rem;color:var(--ink-soft);margin:0 0 8px;}
+  svg{width:100%;height:auto;display:block;touch-action:manipulation;}
+  .marker{cursor:pointer;}
+  .marker circle{fill:var(--surface);stroke:var(--brand);stroke-width:2;transition:fill .12s,stroke .12s;}
+  .marker text{font-size:11px;font-weight:700;fill:var(--brand);text-anchor:middle;dominant-baseline:central;pointer-events:none;}
+  .marker.on circle{fill:var(--accent);stroke:var(--accent);}
+  .marker.on text{fill:#fff;}
+  .marker:focus{outline:none;}
+  .marker:focus circle{stroke:var(--ink);}
+  .legend{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:.8rem;color:var(--ink-soft);}
+  .legend .count{font-weight:700;color:var(--ink);}
+  .clear{background:none;border:0;color:var(--brand);font-weight:650;font-size:.8rem;cursor:pointer;padding:4px 0;}
+  ul.check{list-style:none;padding:0;margin:0;}
+  ul.check li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);}
+  ul.check li:last-child{border-bottom:0;}
+  ul.check input{margin-top:3px;width:17px;height:17px;flex:0 0 auto;accent-color:var(--brand);cursor:pointer;}
+  ul.check label{font-size:.9rem;cursor:pointer;}
+  ul.check label b{display:block;font-weight:700;color:var(--ink);}
+  ul.check label span{color:var(--ink-soft);font-size:.85rem;}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+  .btn{flex:1 1 auto;text-align:center;font-weight:700;font-size:.92rem;padding:12px 16px;border-radius:var(--radius-sm);border:0;cursor:pointer;text-decoration:none;}
+  .btn.print{background:var(--ink);color:#fff;}
+  .btn.cta{background:var(--brand);color:#fff;box-shadow:0 6px 18px color-mix(in srgb,var(--brand) 30%,transparent);}
+  .btn:hover{transform:translateY(-1px);}
+  .foot{margin-top:16px;font-size:.72rem;color:var(--ink-faint);line-height:1.45;}
+  .foot a{color:var(--ink-soft);font-weight:650;}
+  @media(prefers-color-scheme:dark){
+    :root{--bg:#0f141b;--surface:#161c26;--surface-2:#1d2530;--border:#2a3340;--ink:#eef1f6;--ink-soft:#aab3c0;--ink-faint:#8a94a3;}
+    .carbody{fill:#222c38;stroke:#3a4656;}
+    .carglass{fill:#2c3a4a;}
+  }
+  .carbody{fill:#eef1f6;stroke:#cdd5e0;stroke-width:2;}
+  .carglass{fill:#dbe3ee;}
+  .carline{stroke:#cdd5e0;stroke-width:1.5;fill:none;}
+
+  @media print{
+    body{background:#fff;font-size:12px;}
+    .widget{box-shadow:none;border:0;max-width:none;padding:0;}
+    .actions,.clear,.diagram .hint,.foot{display:none !important;}
+    .marker circle{stroke:#000;}
+    .marker.on circle{fill:#000;stroke:#000;}
+    ul.check input{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    h1{font-size:18px;}
+    h2{margin:14px 0 6px;}
+    .diagram{border:1px solid #000;background:#fff;}
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <p class="eyebrow">CarPriceRadar tool</p>
+  <h1>Pickup inspection checklist</h1>
+  <p class="sub">Five minutes at the desk saves a surprise damage charge later. Tap the diagram to mark every existing scratch, then photograph it and get it on the paperwork before you drive off.</p>
+
+  <div class="diagram">
+    <p class="hint">Tap each spot where you find existing damage. Photograph it from two angles.</p>
+    <svg viewBox="0 0 320 440" role="group" aria-label="Top-down car diagram. Tap a marker to flag existing damage.">
+      <!-- top-down car body -->
+      <rect class="carbody" x="70" y="30" width="180" height="380" rx="56" />
+      <!-- windscreen -->
+      <path class="carglass" d="M90 120 Q160 92 230 120 L222 158 Q160 142 98 158 Z" />
+      <!-- rear window -->
+      <path class="carglass" d="M98 300 Q160 286 222 300 L230 338 Q160 366 90 338 Z" />
+      <!-- roof line -->
+      <rect class="carglass" x="98" y="168" width="124" height="122" rx="10" />
+      <line class="carline" x1="160" y1="30" x2="160" y2="120" />
+      <line class="carline" x1="160" y1="338" x2="160" y2="410" />
+      <!-- wheels -->
+      <rect class="carbody" x="52" y="150" width="20" height="46" rx="7" />
+      <rect class="carbody" x="248" y="150" width="20" height="46" rx="7" />
+      <rect class="carbody" x="52" y="258" width="20" height="46" rx="7" />
+      <rect class="carbody" x="248" y="258" width="20" height="46" rx="7" />
+
+      <g id="markers"></g>
+    </svg>
+    <div class="legend">
+      <span><span class="count" id="count">0</span> spot(s) flagged</span>
+      <button type="button" class="clear" id="clear">Clear all</button>
+    </div>
+  </div>
+
+  <h2>Before you drive off</h2>
+  <ul class="check" id="list"></ul>
+
+  <div class="actions">
+    <button type="button" class="btn print" id="print">🖨 Print my checklist</button>
+    <a class="btn cta" href="https://carpriceradar.com/?utm_source=embed&utm_medium=widget&utm_campaign=pickup-checklist" target="_blank" rel="noopener">Compare rentals &amp; pickup →</a>
+  </div>
+
+  <p class="foot">
+    A general guide, not legal advice. Policies and fuel rules differ by rental company and country, so read your own rental agreement. Built by <a href="https://carpriceradar.com" target="_blank" rel="noopener">CarPriceRadar</a>.
+  </p>
+</div>
+
+<script>
+(function(){
+  // Damage-prone spots on a top-down outline. [id, x, y, label]
+  var SPOTS = [
+    ["FB",160,44,"Front bumper"],
+    ["BON",160,86,"Bonnet / hood"],
+    ["FL",86,120,"Front left wing"],
+    ["FR",234,120,"Front right wing"],
+    ["WS",160,138,"Windscreen"],
+    ["ML",78,210,"Left mirror"],
+    ["MR",242,210,"Right mirror"],
+    ["DL",110,228,"Left doors"],
+    ["DR",210,228,"Right doors"],
+    ["RF",160,228,"Roof"],
+    ["RL",86,320,"Rear left wing"],
+    ["RR",234,320,"Rear right wing"],
+    ["RW",160,318,"Rear window"],
+    ["BT",160,372,"Boot / trunk"],
+    ["RB",160,398,"Rear bumper"],
+    ["WH",50,173,"Wheels & tyres"]
+  ];
+
+  var CHECKS = [
+    ["Fuel policy", "Agree full-to-full and photograph the gauge. Avoid prepaid / full-to-empty."],
+    ["Existing damage on paper", "Every scratch, dent and chip written on the condition report before you sign."],
+    ["Photos & video", "Walk around filming all four sides, roof, wheels, windscreen and interior, with a timestamp."],
+    ["Windscreen & glass", "Check for chips and cracks from both inside and outside in good light."],
+    ["Tyres & spare", "Tread and sidewalls on all four, plus a spare (or repair kit) and the jack."],
+    ["Warning lights", "Start the engine and confirm no dashboard warning lights stay on."],
+    ["Lights & wipers", "Headlights, indicators, brake lights and wipers all work."],
+    ["Air-con & controls", "Run the air-con for a minute; find the fuel-flap release and gear type."],
+    ["Mileage odometer", "Note the reading, and whether your mileage is limited or unlimited."],
+    ["Paperwork & toll device", "Rental agreement, insurance excess figure, toll tag/device and the 24-hour support number."],
+    ["Child seats / extras", "Anything you paid for is actually in the car and fitted."],
+    ["Return terms", "Where to drop the keys after hours, the grace period, and any late/cleaning fees."]
+  ];
+
+  var ns = "http://www.w3.org/2000/svg";
+  var g = document.getElementById("markers");
+  var countEl = document.getElementById("count");
+
+  SPOTS.forEach(function(s){
+    var grp = document.createElementNS(ns, "g");
+    grp.setAttribute("class", "marker");
+    grp.setAttribute("tabindex", "0");
+    grp.setAttribute("role", "checkbox");
+    grp.setAttribute("aria-checked", "false");
+    grp.setAttribute("aria-label", s[3]);
+    var c = document.createElementNS(ns, "circle");
+    c.setAttribute("cx", s[1]); c.setAttribute("cy", s[2]); c.setAttribute("r", 13);
+    var t = document.createElementNS(ns, "text");
+    t.setAttribute("x", s[1]); t.setAttribute("y", s[2]); t.textContent = "+";
+    grp.appendChild(c); grp.appendChild(t);
+    var title = document.createElementNS(ns, "title");
+    title.textContent = s[3];
+    grp.appendChild(title);
+    function toggle(){
+      var on = grp.classList.toggle("on");
+      grp.setAttribute("aria-checked", on ? "true" : "false");
+      t.textContent = on ? "✓" : "+";
+      updateCount();
+    }
+    grp.addEventListener("click", toggle);
+    grp.addEventListener("keydown", function(e){
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+    });
+    g.appendChild(grp);
+  });
+
+  function updateCount(){
+    countEl.textContent = document.querySelectorAll(".marker.on").length;
+    postHeight();
+  }
+
+  document.getElementById("clear").addEventListener("click", function(){
+    document.querySelectorAll(".marker.on").forEach(function(m){
+      m.classList.remove("on");
+      m.setAttribute("aria-checked", "false");
+      m.querySelector("text").textContent = "+";
+    });
+    updateCount();
+  });
+
+  var list = document.getElementById("list");
+  CHECKS.forEach(function(c, i){
+    var li = document.createElement("li");
+    var id = "chk" + i;
+    li.innerHTML =
+      '<input type="checkbox" id="' + id + '" />' +
+      '<label for="' + id + '"><b>' + c[0] + '</b><span>' + c[1] + '</span></label>';
+    list.appendChild(li);
+  });
+
+  document.getElementById("print").addEventListener("click", function(){ window.print(); });
+
+  function postHeight(){
+    var h = document.body.scrollHeight;
+    if (window.parent !== window) {
+      window.parent.postMessage({ carpriceradarWidget: "pickup-checklist", height: h }, "*");
+    }
+  }
+  window.addEventListener("load", postHeight);
+  if (window.ResizeObserver) { new ResizeObserver(postHeight).observe(document.body); }
+  postHeight();
+})();
+</script>
+</body>
+</html>

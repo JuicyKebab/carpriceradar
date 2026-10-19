@@ -61,6 +61,8 @@ function Footer() {
             <br />
             <Link href="/alternatives">Alternatives</Link>
             <br />
+            <Link href="/embed">Free tools</Link>
+            <br />
             <Link href="/privacy">Privacy</Link>
             <br />
             <Link href="/terms">Terms</Link>
